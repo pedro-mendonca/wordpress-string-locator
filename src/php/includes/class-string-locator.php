@@ -805,46 +805,32 @@ class String_Locator {
 			return;
 		}
 
+		$code_mirror = wp_enqueue_code_editor( array( 'file' => 'placeholder.php' ) );
+
 		/**
 		 * String Locator Styles
 		 */
-		wp_enqueue_style( 'string-locator', plugin_dir_url( __FILE__ ) . '/../assets/styles/string-locator.css', array(), $this->version );
+		wp_enqueue_style( 'string-locator', plugins_url( 'assets/styles/string-locator.css', STRING_LOCATOR_ROOT ), array(), $this->version );
 
-		if ( ! isset( $_GET['edit-file'] ) ) {
-			/**
-			 * String Locator Scripts
-			 */
-			wp_enqueue_script( 'string-locator-search', plugin_dir_url( __FILE__ ) . '/../assets/js/string-locator-search.js', array( 'jquery' ), $this->version );
+		/**
+		 * String Locator Scripts
+		 */
+		wp_enqueue_script( 'string-locator', plugins_url( 'assets/js/string-locator.js', STRING_LOCATOR_ROOT ), array( 'react', 'react-dom', 'code-editor', 'wp-util', 'wp-i18n' ), $this->version, true );
 
-			wp_localize_script( 'string-locator-search', 'string_locator', array(
-				'ajax_url'              => admin_url( 'admin-ajax.php' ),
-				'search_nonce'          => wp_create_nonce( 'string-locator-search' ),
-				'search_current_prefix' => __( 'Next file: ', 'string-locator' ),
-				'saving_results_string' => __( 'Saving search results&hellip;', 'string-locator' ),
-				'search_preparing'      => __( 'Preparing search&hellip;', 'string-locator' ),
-				'search_started'        => __( 'Preparations completed, search started&hellip;', 'string-locator' ),
-				'search_error'          => __( 'The above error was returned by your server, for more details please consult your servers error logs.', 'string-locator' ),
-				'search_no_results'     => __( 'Your search was completed, but no results were found..', 'string-locator' ),
-				'warning_title'         => __( 'Warning', 'string-locator' )
-			) );
-
-		}
-		else {
-			$code_mirror = wp_enqueue_code_editor( array(
-				'file' => $_GET['edit-file']
-			) );
-
-			/**
-			 * String Locator Scripts
-			 */
-			wp_enqueue_script( 'string-locator-editor', $this->plugin_url . '/../assets/js/string-locator.js', array( 'jquery', 'code-editor', 'wp-util' ), $this->version, true );
-
-			wp_localize_script( 'string-locator-editor', 'string_locator', array(
-				'CodeMirror' => $code_mirror,
-				'goto_line'  => absint( $_GET['string-locator-line'] ),
-				'save_url'   => get_rest_url( null, 'string-locator/v1/save' ),
-			) );
-		}
+		wp_localize_script( 'string-locator', 'string_locator', array(
+			'rest_url'              => get_rest_url( '' ),
+			'search_nonce'          => wp_create_nonce( 'string-locator-search' ),
+			'save_nonce'            => '',
+			'search_current_prefix' => __( 'Next file: ', 'string-locator' ),
+			'saving_results_string' => __( 'Saving search results&hellip;', 'string-locator' ),
+			'search_preparing'      => __( 'Preparing search&hellip;', 'string-locator' ),
+			'search_started'        => __( 'Preparations completed, search started&hellip;', 'string-locator' ),
+			'search_error'          => __( 'The above error was returned by your server, for more details please consult your servers error logs.', 'string-locator' ),
+			'search_no_results'     => __( 'Your search was completed, but no results were found..', 'string-locator' ),
+			'warning_title'         => __( 'Warning', 'string-locator' ),
+			'CodeMirror'            => $code_mirror,
+			'save_url'              => get_rest_url( null, 'string-locator/v1/save' ),
+		) );
 	}
 
 	/**

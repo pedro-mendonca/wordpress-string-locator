@@ -3,16 +3,18 @@ import Header from './Header';
 import SearchForm from './SearchForm';
 import SearchResults from './SearchResults';
 
-function Search() {
+function Search( { isSearching, searchResults, searchString, searchRegex } ) {
 	return (
 		<>
 			<Header />
 			<SearchForm
-
+				searchString={ searchString }
+				searchRegex={ searchRegex }
 			/>
 
 			<SearchResults
-
+				isSearching={ isSearching }
+				searchResults={ searchResults }
 			/>
 		</>
 	);

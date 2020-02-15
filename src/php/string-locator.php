@@ -29,4 +29,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die();
 }
 
+define( 'STRING_LOCATOR_ROOT', __FILE__ );
+
 require_once __DIR__ . '/includes/class-string-locator.php';

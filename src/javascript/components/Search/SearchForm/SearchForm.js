@@ -1,7 +1,7 @@
 import React from 'react';
 import { __ } from '@wordpress/i18n';
 
-function SearchForm() {
+function SearchForm( { searchString, searchRegex } ) {
 	return (
 		<>
 			<form action="<?php echo esc_url( $this_url ); ?>" method="post" id="string-locator-search-form">
@@ -42,12 +42,12 @@ function SearchForm() {
 						{ __( 'Search string', 'string-locator' ) }
 					</label>
 
-					<input type="text" name="string-locator-string" id="string-locator-string" value="<?php echo esc_attr( $search_string ); ?>" />
+					<input type="text" name="string-locator-string" id="string-locator-string" value={ searchString } />
 				</div>
 
 				<div class="form-group">
 					<label>
-						<input type="checkbox" name="string-locator-regex" id="string-locator-regex" checked="checked" />
+						<input type="checkbox" name="string-locator-regex" id="string-locator-regex" checked />
 						{ __( 'RegEx search', 'string-locator' ) }
 					</label>
 				</div>
