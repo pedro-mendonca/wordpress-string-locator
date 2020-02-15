@@ -16,18 +16,28 @@
   "bugs": "https://github.com/Clorith/wordpress-string-locator/issues",
   "engines": {
     "node": ">=10.16.0"
-  },
+	},
+	"dependencies": {
+		"axios": "~0.19.2"
+	},
   "devDependencies": {
-    "@wordpress/scripts": "^4.1.0",
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5"
+		"@wordpress/scripts": "~6.2.0",
+		"@wordpress/a11y": "~2.6.0",
+		"@wordpress/api-fetch": "~3.9.0",
+		"@wordpress/components": "~9.0.0",
+		"copy-webpack-plugin": "~5.1.1",
+		"react": "~16.12.0",
+		"react-dom": "~16.12.0",
+		"mini-css-extract-plugin": "~0.9.0",
+		"css-loader": "~3.4.2",
+		"sass-loader": "~8.0.2",
+		"node-sass": "~4.13.1"
+
   },
   "scripts": {
-    "build": "gulp && wp-scripts build",
-    "lint:css": "wp-scripts lint-style 'assets/styles/**/*.css'",
-    "lint:js": "wp-scripts lint-js ./assets/javascript/**/*.js",
+    "build": "wp-scripts build",
+    "lint:css": "wp-scripts lint-style './src/styles/**/*.scss'",
+    "lint:js": "wp-scripts lint-js ./src/javascript/**/*.js",
     "start": "wp-scripts start"
   }
 }

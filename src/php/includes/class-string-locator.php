@@ -1,33 +1,11 @@
 <?php
 /**
- * Plugin Name: String Locator
- * Plugin URI: http://www.clorith.net/wordpress-string-locator/
- * Description: Scan through theme and plugin files looking for text strings
- * Version: 2.3.1
- * Author: Clorith
- * Author URI: http://www.clorith.net
- * Text Domain: string-locator
- * License: GPL2
+ * String Locator main class.
  *
- * Copyright 2013 Marius Jensen (email : marius@clorith.net)
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2, as
- * published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * @package StringLocator
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die();
-}
+namespace clorith\StringLocator;
 
 /**
  * Class String_Locator
@@ -830,13 +808,13 @@ class String_Locator {
 		/**
 		 * String Locator Styles
 		 */
-		wp_enqueue_style( 'string-locator', plugin_dir_url( __FILE__ ) . '/resources/css/string-locator.css', array(), $this->version );
+		wp_enqueue_style( 'string-locator', plugin_dir_url( __FILE__ ) . '/../assets/styles/string-locator.css', array(), $this->version );
 
 		if ( ! isset( $_GET['edit-file'] ) ) {
 			/**
 			 * String Locator Scripts
 			 */
-			wp_enqueue_script( 'string-locator-search', plugin_dir_url( __FILE__ ) . '/resources/js/string-locator-search.js', array( 'jquery' ), $this->version );
+			wp_enqueue_script( 'string-locator-search', plugin_dir_url( __FILE__ ) . '/../assets/js/string-locator-search.js', array( 'jquery' ), $this->version );
 
 			wp_localize_script( 'string-locator-search', 'string_locator', array(
 				'ajax_url'              => admin_url( 'admin-ajax.php' ),
@@ -859,7 +837,7 @@ class String_Locator {
 			/**
 			 * String Locator Scripts
 			 */
-			wp_enqueue_script( 'string-locator-editor', $this->plugin_url . '/resources/js/string-locator.js', array( 'jquery', 'code-editor', 'wp-util' ), $this->version, true );
+			wp_enqueue_script( 'string-locator-editor', $this->plugin_url . '/../assets/js/string-locator.js', array( 'jquery', 'code-editor', 'wp-util' ), $this->version, true );
 
 			wp_localize_script( 'string-locator-editor', 'string_locator', array(
 				'CodeMirror' => $code_mirror,
@@ -916,17 +894,7 @@ class String_Locator {
 			return false;
 		}
 
-		/**
-		 * Show the edit page if;
-		 * - The edit file path query var is set
-		 * - The edit file path query var isn't empty
-		 * - The edit file path query var does not contains double dots (used to traverse directories)
-		 */
-		if ( isset( $_GET['string-locator-path'] ) && $this->is_valid_location( $_GET['string-locator-path'] ) ) {
-			include_once( dirname( __FILE__ ) . '/editor.php' );
-		} else {
-			include_once( dirname( __FILE__ ) . '/options.php' );
-		}
+		echo '<div id="string-locator" class="wrap"></div>';
 	}
 
 	/**
